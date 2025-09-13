@@ -11,7 +11,7 @@
         {% for post in posts %}
             <article class="post">
                 <h2>
-                    <a href="{% url 'posts:page' slug=post.slug %}">
+                    <a href="{% url 'posts:page' slug=post.slug pk=post.pk %}">
                     {{ post.title }}
                     </a>
                 </h2>
@@ -19,21 +19,21 @@
                 <p>{{ post.body }}</p>
                 {% if post.author == request.user %}
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <!-- Update -->
-                        <a href="{% url 'posts:update' slug=post.slug %}">
+                        
+                        <a href="{% url 'posts:update' pk=post.pk slug=post.slug %}">
                             <button class="form-submit">Update Post</button>
                         </a>
 
-                        <!-- Delete -->
+                       
                         <div id="delete-section">
                             <button id="show-confirm" class="form-submit">Delete Post</button>
                         </div>
                     </div>
 
-                    <!-- Confirmação de delete (linha abaixo) -->
+                    
                     <div id="confirm-delete" style="display:none; margin-top:5px;">
                         <p><span>Tem certeza que quer deletar?</span></p>
-                        <form action="{% url 'posts:delete' slug=post.slug %}" method="post" style="display:inline;">
+                        <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="form-submit">Sim</button>
                         </form>
