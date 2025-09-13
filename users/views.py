@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 
 from users.forms import UsuarioForm
+from users.models import Usuario
 
 
 
@@ -35,3 +37,8 @@ def logout_view(request):
     if request.method == "POST":
         logout(request)
         return redirect("posts:list")
+    
+
+def profile_view(request, pk):
+    user = Usuario.objects.get(pk=pk)
+    return render(request, 'users/profile.html', {'profile_user': user})

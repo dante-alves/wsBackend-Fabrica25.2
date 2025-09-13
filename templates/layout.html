@@ -5,48 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        {% block title %}
-            Django App
-        {% endblock %}
+        {% block title %}Django App{% endblock %}
     </title>
-     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/main.js' %}" defer></script>
 </head>
 <body>
     <nav>
-        <a href="/" title="Home">
-            <span role="img" aria-label="Home">🏠</span>
-        </a> |
-        <a href="/about" title="About">
-            <span role="img" aria-label="About">😀</span>
-        </a> |
-        <a href="{% url 'posts:list' %}" title="Posts">
-            <span role="img" aria-label="Posts">🖼️</span>
-        </a> |
-        {% if user.is_authenticated %}
-        <a href="{% url 'posts:new-post' %}" title="New Post">
-            <span role="img" aria-label="New Post"></span>🆕
-            </a> |
-            <form class="logout" action="{% url 'users:logout' %}" method="post">
-                {% csrf_token %}
-                <button class="logout-button" arial-label="User Logout" title="User Logout">👋</button>
-            </form> |
-        {% else %}
-            <a href="{% url 'users:register' %}" title="User Registration">
-                <span role="img" aria-label="User Registration">👤</span>
-            </a> |
-            <a href="{% url 'users:login' %}" title="User Login">
-                <span role="img" aria-label="User Login">🔐</span>
-            </a> |
-        {% endif %}
-            
-        <a href="{% url 'news:news' %}" title="News">
+        <div class="links">
+            <a href="/" title="Home">
+                <span role="img" aria-label="Home">🏠</span>
+            </a>
+            <a href="/about" title="About">
+                <span role="img" aria-label="About">😀</span>
+            </a>
+            <a href="{% url 'posts:list' %}" title="Posts">
+                <span role="img" aria-label="Posts">🖼️</span>
+            </a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'posts:new-post' %}" title="New Post">
+                    <span role="img" aria-label="New Post">🆕</span>
+                </a>
+                <form class="logout" action="{% url 'users:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="logout-button" aria-label="User Logout" title="User Logout">👋</button>
+                </form>
+            {% else %}
+                <a href="{% url 'users:register' %}" title="User Registration">
+                    <span role="img" aria-label="User Registration">👤</span>
+                </a>
+                <a href="{% url 'users:login' %}" title="User Login">
+                    <span role="img" aria-label="User Login">🔐</span>
+                </a>
+            {% endif %}
+
+            <a href="{% url 'news:news' %}" title="News">
                 <span role="img" aria-label="News">📰</span>
-        </a>
+            </a>
+        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'users:profile' pk=user.pk%}" class="profile-circle" title="{{ user.username }}">
+                <img src="{{ user.photo.url }}" alt="{{ user.username }}">
+            </a>
+        {% endif %}
     </nav>
+
     <main>
-        {% block  content %}
-        {% endblock  %}
+        {% block content %}{% endblock %}
     </main>
 </body>
 </html>
