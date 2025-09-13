@@ -30,7 +30,7 @@ def post_update(request, pk, slug):
         form = forms.CreatePost(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('posts:page', slug=post.slug)
+            return redirect('posts:page', pk=post.pk, slug=post.slug)
     else:
         form = forms.CreatePost(instance=post)
     

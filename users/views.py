@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
+
+from users.forms import UsuarioForm
 
 
 
 def register_view(request):
     if request.method == "POST": #if the form is submited and is POST
-        form = UserCreationForm(request.POST) # form recebe os dados
+        form = UsuarioForm(request.POST, request.FILES) # form recebe os dados
         if form.is_valid(): # verifica se é válido para salvar
             login(request, form.save()) # isso é para automaticamente logar o usuário ao registrar e com form.save() salvar no banco de dados
             return redirect("posts:list")
     else:
-        form = UserCreationForm()
+        form = UsuarioForm()
 
     return render(request, 'users/register.html', {"form": form})
 
