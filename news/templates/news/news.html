@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    News
+{% endblock %}
+
+{%  block content%}
+    <section>
+        <h1>News</h1>
+        {% for new in news %}
+            <h2>{{ new.title }}</h2>
+            <img src="{{ new.image }}" alt="">
+            <p>{{ new.description }}</p>
+            <p>Published in {{ new.published }}</p>
+        {% endfor %}
+    </section>
+{% endblock %}
