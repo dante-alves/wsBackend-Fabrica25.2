@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+{% load tz %} <!-- para adicionar a timezone na data do post -->
+{% block title %}
+    Posts
+{% endblock %}
+
+{%  block content%}
+    <section>
+        <h1>Posts</h1>
+
+        {% for post in posts %}
+            <article class="post">
+                <h2>
+                    <a href="{% url 'posts:page' slug=post.slug %}">
+                    {{ post.title }}
+                    </a>
+                </h2>
+                <p>{{ post.date|timezone:"America/Sao_Paulo" }} by {{ post.author }}</p>
+                <p>{{ post.body }}</p>
+                {% if post.author == request.user %}
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <!-- Update -->
+                        <a href="{% url 'posts:update' slug=post.slug %}">
+                            <button class="form-submit">Update Post</button>
+                        </a>
+
+                        <!-- Delete -->
+                        <div id="delete-section">
+                            <button id="show-confirm" class="form-submit">Delete Post</button>
+                        </div>
+                    </div>
+
+                    <!-- Confirmação de delete (linha abaixo) -->
+                    <div id="confirm-delete" style="display:none; margin-top:5px;">
+                        <p><span>Tem certeza que quer deletar?</span></p>
+                        <form action="{% url 'posts:delete' slug=post.slug %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="form-submit">Sim</button>
+                        </form>
+                        <button id="cancel-delete" class="form-submit">Não</button>
+                    </div>
+
+                    <script>
+                        const showConfirm = document.getElementById('show-confirm');
+                        const confirmDelete = document.getElementById('confirm-delete');
+                        const cancelDelete = document.getElementById('cancel-delete');
+                        
+                        
+
+                        showConfirm.addEventListener('click', () => {
+                            showConfirm.style.display = 'none';
+                            confirmDelete.style.display = 'block'; // aparece na linha de baixo
+                        });
+
+                        cancelDelete.addEventListener('click', () => {
+                            showConfirm.style.display = 'inline';
+                            confirmDelete.style.display = 'none';
+                        });
+                    </script>
+                {% endif %}
+
+
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}
