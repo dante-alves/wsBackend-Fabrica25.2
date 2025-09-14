@@ -33,31 +33,28 @@
                         </a>
 
                        
-                        <div id="delete-section">
-                            <button id="show-confirm" class="form-submit">Delete Post</button>
+                        <div id="delete-section-{{ post.pk }}">
+                            <button id="show-confirm-{{ post.pk }}" class="form-submit">Delete Post</button>
                         </div>
                     </div>
 
-                    
-                    <div id="confirm-delete" style="display:none; margin-top:5px;">
-                        <p><span>Tem certeza que quer deletar?</span></p>
+                    <div id="confirm-delete-{{ post.pk }}" style="display:none; margin-top:5px;">
+                        <p>Tem certeza que quer deletar?</p>
                         <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
                             {% csrf_token %}
                             <button type="submit" class="form-submit">Sim</button>
                         </form>
-                        <button id="cancel-delete" class="form-submit">Não</button>
+                        <button id="cancel-delete-{{ post.pk }}" class="form-submit">Não</button>
                     </div>
 
                     <script>
-                        const showConfirm = document.getElementById('show-confirm');
-                        const confirmDelete = document.getElementById('confirm-delete');
-                        const cancelDelete = document.getElementById('cancel-delete');
-                        
-                        
+                        const showConfirm = document.getElementById('show-confirm-{{ post.pk }}');
+                        const confirmDelete = document.getElementById('confirm-delete-{{ post.pk }}');
+                        const cancelDelete = document.getElementById('cancel-delete-{{ post.pk }}');
 
                         showConfirm.addEventListener('click', () => {
                             showConfirm.style.display = 'none';
-                            confirmDelete.style.display = 'block'; 
+                            confirmDelete.style.display = 'block';
                         });
 
                         cancelDelete.addEventListener('click', () => {

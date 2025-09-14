@@ -9,13 +9,50 @@
 {%  block content%}
     <section>
         {% if post.banner %}
-            <img src="{{ post.banner.url }}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
+            <img src="{{ post.banner.url }}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem; display: block; margin: 0 auto">
         {% else %}
             <img src="{% static 'images/fallback.png' %}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.date|timezone:"America/Sao_Paulo"}}</p>
         <p>{{ post.body }}</p>
-        
+        {% if post.author == request.user %}
+            <div style="display: flex; gap: 10px; align-items: center;">
+                
+                <a href="{% url 'posts:update' pk=post.pk slug=post.slug %}">
+                    <button class="form-submit">Update Post</button>
+                </a>
+
+                
+                <div id="delete-section-{{ post.pk }}">
+                    <button id="show-confirm-{{ post.pk }}" class="form-submit">Delete Post</button>
+                </div>
+            </div>
+
+            <div id="confirm-delete-{{ post.pk }}" style="display:none; margin-top:5px;">
+                <p>Tem certeza que quer deletar?</p>
+                <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="form-submit">Sim</button>
+                </form>
+                <button id="cancel-delete-{{ post.pk }}" class="form-submit">Não</button>
+            </div>
+
+            <script>
+                const showConfirm = document.getElementById('show-confirm-{{ post.pk }}');
+                const confirmDelete = document.getElementById('confirm-delete-{{ post.pk }}');
+                const cancelDelete = document.getElementById('cancel-delete-{{ post.pk }}');
+
+                showConfirm.addEventListener('click', () => {
+                    showConfirm.style.display = 'none';
+                    confirmDelete.style.display = 'block';
+                });
+
+                cancelDelete.addEventListener('click', () => {
+                    showConfirm.style.display = 'inline';
+                    confirmDelete.style.display = 'none';
+                });
+            </script>
+        {% endif %}
     </section>
 {% endblock %}
