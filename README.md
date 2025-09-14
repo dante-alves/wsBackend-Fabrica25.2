@@ -10,7 +10,6 @@ Um projeto simples em **Django** onde o usuário pode se cadastrar, realizar log
 
 ## 🚀 Preparação do Ambiente
 
-### Usando python e venv(opcional)
 
 ### 1. Verifique se o Python está instalado
 
@@ -114,28 +113,6 @@ Abra no navegador:
 👉 [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
 ---
-
-### Usando Docker(recomendado)
-
-### 1. Build e subida dos contêineres
-```bash
-docker-compose up -d --build
-```
-
-### 2. Aplicar migrations
-```bash
-docker-compose exec web python manage.py migrate
-
-```
-
-### 3. Criar superuser
-```bash
-docker-compose exec web python manage.py createsuperuser
-```
-
-### Acessar o projeto no navegador
-Abra:
-http://localhost:8000
 
 ## 📂 Estrutura do Projeto
 
