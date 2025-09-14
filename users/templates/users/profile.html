@@ -44,12 +44,12 @@
 
                         
                         <div id="confirm-delete" style="display:none; margin-top:5px;">
-                            <p><span>Tem certeza que quer deletar?</span></p>
+                            <p><span>Are you sure you want to delete?</span></p>
                             <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
                                 {% csrf_token %}
-                                <button type="submit" class="form-submit">Sim</button>
+                                <button type="submit" class="form-submit">Yes</button>
                             </form>
-                            <button id="cancel-delete" class="form-submit">Não</button>
+                            <button id="cancel-delete" class="form-submit">No</button>
                         </div>
 
                         <script>
@@ -76,7 +76,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p>Este usuário ainda não publicou nenhum post.</p>
+        <p>This user hasn't posted anything yet</p>
     {% endif %}
 </section>
 {% endblock %}
