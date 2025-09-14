@@ -30,12 +30,12 @@
             </div>
 
             <div id="confirm-delete-{{ post.pk }}" style="display:none; margin-top:5px;">
-                <p>Tem certeza que quer deletar?</p>
+                <p>Are you sure you want to document.addEventListener?</p>
                 <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="form-submit">Sim</button>
+                    <button type="submit" class="form-submit">Yes</button>
                 </form>
-                <button id="cancel-delete-{{ post.pk }}" class="form-submit">Não</button>
+                <button id="cancel-delete-{{ post.pk }}" class="form-submit">No</button>
             </div>
 
             <script>

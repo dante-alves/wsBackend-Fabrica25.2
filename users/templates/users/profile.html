@@ -18,60 +18,37 @@
             {% for post in user_posts %}
                 <article class="post">
                     <h2>
-                        <a href="{% url 'posts:page' slug=post.slug pk=post.pk %}">
-                        {{ post.title }}
-                        </a>
+                        <a href="{% url 'posts:page' slug=post.slug pk=post.pk %}">{{ post.title }}</a>
                     </h2>
+
                     {% if post.banner %}
-                         <img src="{{ post.banner.url }}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
+                        <img src="{{ post.banner.url }}" alt="{{ post.title }}" class="post-img">
                     {% else %}
-                        <img src="{% static 'images/fallback.png' %}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto;    border-radius: 10px; margin-bottom: 1rem;">
+                        <img src="{% static 'images/fallback.png' %}" alt="{{ post.title }}" class="post-img">
                     {% endif %}
-                        <p>{{ post.body }}</p>
-                        <p>{{ post.date|timezone:"America/Sao_Paulo" }} by {{ post.author }}</p>
+
+                    <p>{{ post.body }}</p>
+                    <p>{{ post.date|timezone:"America/Sao_Paulo" }} by {{ post.author }}</p>
+
                     {% if post.author == request.user %}
-                        <div style="display: flex; gap: 10px; align-items: center;">
-                            
-                            <a href="{% url 'posts:update' pk=post.pk slug=post.slug %}">
-                                <button class="form-submit">Update Post</button>
-                            </a>
 
-                        
-                            <div id="delete-section">
-                                <button id="show-confirm" class="form-submit">Delete Post</button>
-                            </div>
-                        </div>
+                    <a href="{% url 'posts:update' pk=post.pk slug=post.slug %}">
+                        <button class="form-submit">Update Post</button>
+                    </a>
+                    
+                    <div class="post-actions">
+                        <button class="show-confirm" data-post="{{ post.pk }}">Delete Post</button>
+                    </div>
 
-                        
-                        <div id="confirm-delete" style="display:none; margin-top:5px;">
-                            <p><span>Are you sure you want to delete?</span></p>
-                            <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="form-submit">Yes</button>
-                            </form>
-                            <button id="cancel-delete" class="form-submit">No</button>
-                        </div>
-
-                        <script>
-                            const showConfirm = document.getElementById('show-confirm');
-                            const confirmDelete = document.getElementById('confirm-delete');
-                            const cancelDelete = document.getElementById('cancel-delete');
-                            
-                            
-
-                            showConfirm.addEventListener('click', () => {
-                                showConfirm.style.display = 'none';
-                                confirmDelete.style.display = 'block'; 
-                            });
-
-                            cancelDelete.addEventListener('click', () => {
-                                showConfirm.style.display = 'inline';
-                                confirmDelete.style.display = 'none';
-                            });
-                        </script>
+                    <div class="confirm-delete" id="confirm-delete-{{ post.pk }}" style="display:none; margin-top:5px;">
+                        <p>Are you sure you want to delete?</p>
+                        <form action="{% url 'posts:delete' pk=post.pk slug=post.slug %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Yes</button>
+                        </form>
+                        <button class="cancel-delete" data-post="{{ post.pk }}">No</button>
+                    </div>
                     {% endif %}
-
-
                 </article>
             {% endfor %}
         </ul>
