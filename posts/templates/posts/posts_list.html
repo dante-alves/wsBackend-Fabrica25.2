@@ -1,5 +1,6 @@
 {% extends 'layout.html' %}
 {% load tz %} <!-- para adicionar a timezone na data do post -->
+{% load static %}
 {% block title %}
     Posts
 {% endblock %}
@@ -15,8 +16,13 @@
                     {{ post.title }}
                     </a>
                 </h2>
-                <img src="{{ post.banner.url }}" alt="{{ post.title }}" 
-                    style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
+
+                {% if post.banner %}
+                <img src="{{ post.banner.url }}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
+                {% else %}
+                 <img src="{% static 'images/fallback.png' %}" alt="{{ post.title }}" style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
+                {% endif %}
+                    
                 <p>{{ post.body }}</p>
                 <p>{{ post.date|timezone:"America/Sao_Paulo" }} by {{ post.author }}</p>
                 {% if post.author == request.user %}
