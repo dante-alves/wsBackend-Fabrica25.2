@@ -1,17 +1,29 @@
 {% extends 'layout.html' %}
 
-{% block title %}
-    News
-{% endblock %}
+{% load tz %}
 
-{%  block content%}
-    <section>
-        <h1>News</h1>
+{% block title %}News{% endblock %}
+
+{% block content %}
+<section class="news-section">
+    <h1>Top News</h1>
+    <div class="news-container">
         {% for new in news %}
-            <h2>{{ new.title }}</h2>
-            <img src="{{ new.image }}" alt="">
-            <p>{{ new.description }}</p>
-            <p>Published in {{ new.published }}</p>
+            <article class="news-item">
+                {% if new.image %}
+                    <img src="{{ new.image }}" alt="{{ new.title }}">
+                {% endif %}
+                <div class="news-content">
+                    <h2><a href="{{ new.url }}" target="_blank">{{ new.title }}</a></h2>
+                    <p>{{ new.description }}</p>
+                    <p class="news-meta">
+                        Source: {{ new.source }} | Published: {{ new.published|timezone:"America/Sao_Paulo" }}
+                    </p>
+                </div>
+            </article>
         {% endfor %}
-    </section>
+    </div>
+
+    <a href="{% url 'news:random' %}">Show me something new!</a>
+</section>
 {% endblock %}

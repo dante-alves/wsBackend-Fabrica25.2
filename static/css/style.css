@@ -139,3 +139,68 @@ a:hover {
     height: 100%;
     object-fit: cover;
 }
+
+.news-section {
+    padding: 1rem;
+}
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+/* Cada notícia será um "item" com imagem quadrada à esquerda */
+.news-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: #1c1c1c;
+    padding: 1rem;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.news-item:hover {
+    transform: scale(1.02);
+}
+
+/* Imagem quadrada à esquerda */
+.news-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;   /* cobre o espaço sem barras pretas */
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* Conteúdo textual da notícia */
+.news-content {
+    flex: 1;
+    color: whitesmoke;
+}
+
+.news-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-content h2 a {
+    color: #81dbb8;
+    text-decoration: none;
+}
+
+.news-content h2 a:hover {
+    opacity: 0.85;
+}
+
+.news-content p {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-meta {
+    font-size: 0.85rem;
+    color: #aaa;
+}

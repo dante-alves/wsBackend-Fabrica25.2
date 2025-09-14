@@ -15,8 +15,10 @@
                     {{ post.title }}
                     </a>
                 </h2>
-                <p>{{ post.date|timezone:"America/Sao_Paulo" }} by {{ post.author }}</p>
+                <img src="{{ post.banner.url }}" alt="{{ post.title }}" 
+                    style="max-width: 400px; width: 100%; height: auto; border-radius: 10px; margin-bottom: 1rem;">
                 <p>{{ post.body }}</p>
+                <p>{{ post.date|timezone:"America/Sao_Paulo" }} by {{ post.author }}</p>
                 {% if post.author == request.user %}
                     <div style="display: flex; gap: 10px; align-items: center;">
                         

@@ -41,4 +41,5 @@ def logout_view(request):
 
 def profile_view(request, pk):
     user = Usuario.objects.get(pk=pk)
-    return render(request, 'users/profile.html', {'profile_user': user})
+    user_posts = user.posts.all().order_by('-date')
+    return render(request, 'users/profile.html', {'profile_user': user, 'user_posts': user_posts})
