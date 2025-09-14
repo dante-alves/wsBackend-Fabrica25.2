@@ -69,14 +69,6 @@ a:hover {
     max-width: 800px;
 }
 
-.post-img {
-    display: block;
-    max-width: 100%;      
-    height: auto;          
-    border-radius: 10px;
-    margin: 0 auto 1rem;   
-}
-
 .form-with-validation {
     font-size: 1rem;
     padding: 1rem;
@@ -99,12 +91,6 @@ a:hover {
 }
 
 .form-submit {
-    padding: 0.5rem;
-    border-radius: 10px;
-    width: 125px;
-}
-
-.show-confirm{
     padding: 0.5rem;
     border-radius: 10px;
     width: 125px;
